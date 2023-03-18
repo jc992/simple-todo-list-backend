@@ -1,0 +1,37 @@
+{
+  "name": "elecctro-be",
+  "version": "1.0.0",
+  "description": "Simple todo list API using hapi.js and knex.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "babel-node src/index.js --inspect",
+    "build": "babel -d ./dist ./src",
+    "build:clean": "rm -rf dist",
+    "serve": "node dist/index.js",
+    "knexfile": "knex init",
+    "knex:migration:generate": "knex migrate:make NewMigration --knexfile=./knexfile.cjs",
+    "knex:migration:run": "knex migrate:latest --knexfile=./knexfile.cjs",
+    "knex:seed:generate": "knex seed:make NewSeed",
+    "knex:seed:run": "knex seed:run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/hapi": "^21.3.0",
+    "@hapi/inert": "^7.1.0",
+    "@hapi/vision": "^7.0.1",
+    "dotenv": "^16.0.3",
+    "hapi-swagger": "^16.0.1",
+    "joi": "^17.8.4",
+    "knex": "^2.4.2",
+    "pg": "^8.10.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0"
+  }
+}
