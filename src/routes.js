@@ -25,4 +25,16 @@ export default [
       ...TODO_VALIDATION_CONFIG.POST,
     },
   },
+  {
+    method: 'PATCH',
+    path: '/todos',
+    options: {
+      handler: TodoController.update,
+      description: 'Update Todo Item',
+      notes:
+        'This route edits an item on the to-do list. The edited item will be referenced by id using the URL parameter id',
+      tags: ['api'],
+      ...TODO_VALIDATION_CONFIG.PATCH,
+    },
+  },
 ];

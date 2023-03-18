@@ -47,4 +47,35 @@ export default {
       throw BadRequestException(e.message);
     }
   },
+
+  /**
+   * This route edits an item on the to-do list. The edited item will be referenced by id using the URL parameter id
+   * @param (URL) id {String} Mandatory query parameter Unique identifier of the list item.
+   * Note: Both payload params are optional, but at least one of them must be present for the request to be valid.
+   * @param (Payload) state: State of the item (i.e., COMPLETE or INCOMPLETE).
+   * @param (Payload) description: Description of the item (e.g., Buy milk at the store.).
+   * @returns {Object} JSON object, representing the edited item, having the following structure:
+   * id: Unique identifier of the list item.
+   * state: State of the item (i.e., COMPLETE or INCOMPLETE).
+   * description: Description of the item (e.g., Buy milk at the store.).
+   * createdAt: Creation date of the item (e.g., 2021-05-12T07:23:45.678Z).
+   * completedAt: Completion date of the item (e.g., 2021-05-13T11:23:45.678Z).
+   */
+  update: async (request, h) => {
+    const { query, payload } = request;
+    if (!query.id) {
+      throw BadRequestException(ERROR_MESSAGES.MISSING_ID);
+    }
+
+    if (!payload.state && !payload.description) {
+      throw BadRequestException(ERROR_MESSAGES.INVALID_UPDATE_PAYLOAD);
+    }
+
+    try {
+      return todos.update(query.id, payload);
+    } catch (e) {
+      console.error({ e });
+      throw BadRequestException(e.message);
+    }
+  },
 };
