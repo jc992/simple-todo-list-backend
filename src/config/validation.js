@@ -9,6 +9,17 @@ const todoSchema = {
 };
 
 export const TODO_VALIDATION_CONFIG = {
+  GET: {
+    validate: {
+      query: Joi.object({
+        filter: Joi.string().optional(),
+        orderBy: Joi.string().optional(),
+      }),
+    },
+    response: {
+      schema: Joi.array().items(todoSchema).label('GetResponse'),
+    },
+  },
   POST: {
     validate: {
       payload: Joi.object({
