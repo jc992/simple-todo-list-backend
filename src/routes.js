@@ -37,4 +37,16 @@ export default [
       ...TODO_VALIDATION_CONFIG.PATCH,
     },
   },
+  {
+    method: 'DELETE',
+    path: '/todos',
+    options: {
+      handler: TodoController.delete,
+      description: 'Delete Todo Item',
+      notes:
+        'This route removes an item from the to-do list. The item will be referenced by id using the URL parameter id',
+      tags: ['api'],
+      ...TODO_VALIDATION_CONFIG.DELETE,
+    },
+  },
 ];

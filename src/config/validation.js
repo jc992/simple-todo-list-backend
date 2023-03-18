@@ -44,4 +44,12 @@ export const TODO_VALIDATION_CONFIG = {
       schema: Joi.object(todoSchema).label('UpdateResponse'),
     },
   },
+  DELETE: {
+    validate: {
+      query: Joi.object({
+        id: Joi.string().required(), // TODO figure out how to give custom error messages
+      }),
+    },
+    response: { schema: Joi.object({}).label('DeleteResponse') },
+  },
 };
