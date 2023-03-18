@@ -30,4 +30,18 @@ export const TODO_VALIDATION_CONFIG = {
       schema: Joi.object(todoSchema).label('PostResponse'),
     },
   },
+  PATCH: {
+    validate: {
+      query: Joi.object({
+        id: Joi.string().required(), // TODO figure out how to give custom error messages
+      }),
+      payload: Joi.object({
+        state: Joi.string().optional(),
+        description: Joi.string().optional(),
+      }).label('UpdatePayload'),
+    },
+    response: {
+      schema: Joi.object(todoSchema).label('UpdateResponse'),
+    },
+  },
 };
