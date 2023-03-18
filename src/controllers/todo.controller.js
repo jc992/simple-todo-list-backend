@@ -78,4 +78,23 @@ export default {
       throw BadRequestException(e.message);
     }
   },
+  
+  /**
+   * This route removes an item from the to-do list. The item will be referenced by id using the URL parameter id
+   * @param (URL) id {String} Mandatory query parameter Unique identifier of the list item.
+   * @returns {Object} empty JSON object.
+   */
+  delete: async (request) => {
+    const { query } = request;
+    if (!query.id) {
+      throw BadRequestException(ERROR_MESSAGES.MISSING_ID);
+    }
+
+    try {
+      return todos.delete(query.id);
+    } catch (e) {
+      console.error({ e });
+      throw BadRequestException(e.message);
+    }
+  },
 };

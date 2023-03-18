@@ -51,4 +51,14 @@ export default {
 
     return result[0];
   },
+
+  delete: async (id) => {
+    const todo = await knex.first('*').from(todos).where({ id });
+    if (!todo) {
+      throw NotFoundException(ERROR_MESSAGES.NON_EXISTANT_ID);
+    }
+
+    await knex.delete().from(todos).where({ id });
+    return {};
+  },
 };
