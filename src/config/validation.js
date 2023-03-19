@@ -8,6 +8,11 @@ const todoSchema = {
   completedAt: Joi.date().allow(null),
 };
 
+const registerResponse = {
+  username: Joi.string(),
+  accessToken: Joi.string(),
+}
+
 export const TODO_VALIDATION_CONFIG = {
   GET: {
     validate: {
@@ -51,5 +56,19 @@ export const TODO_VALIDATION_CONFIG = {
       }),
     },
     response: { schema: Joi.object({}).label('DeleteResponse') },
+  },
+};
+
+export const USER_VALIDATION_CONFIG = {
+  REGISTER: {
+    validate: {
+      payload: Joi.object({
+        username: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    },
+    response: {
+      schema: Joi.object(registerResponse).label('RegisterResponse'),
+    },
   },
 };

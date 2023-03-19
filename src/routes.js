@@ -1,5 +1,10 @@
 import { default as TodoController } from './controllers/todo.controller.js';
-import { TODO_VALIDATION_CONFIG } from './config/validation.js';
+import { default as AuthController } from './controllers/auth.controller.js';
+import {
+  TODO_VALIDATION_CONFIG,
+  USER_VALIDATION_CONFIG,
+} from './config/validation.js';
+import { JWT_STRATEGY } from './constants.js';
 
 export default [
   {
@@ -47,6 +52,30 @@ export default [
         'This route removes an item from the to-do list. The item will be referenced by id using the URL parameter id',
       tags: ['api'],
       ...TODO_VALIDATION_CONFIG.DELETE,
+    },
+  },
+
+  // AUTH
+  {
+    method: 'POST',
+    path: '/register',
+    options: {
+      handler: AuthController.register,
+      description: 'Register User',
+      notes: 'This route registers a user.',
+      tags: ['api'],
+      ...USER_VALIDATION_CONFIG.REGISTER,
+    },
+  },
+  {
+    method: 'POST',
+    path: '/login',
+    handler: AuthController.login,
+    options: {
+      auth: { strategy: JWT_STRATEGY },
+      description: 'Login User',
+      notes: 'This route logs a user in.',
+      tags: ['api'],
     },
   },
 ];
