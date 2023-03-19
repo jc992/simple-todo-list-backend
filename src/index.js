@@ -1,6 +1,10 @@
 import { config } from 'dotenv';
 import Hapi from '@hapi/hapi';
+import Basic from '@hapi/basic';
+import AuthJwt from 'hapi-auth-jwt2';
+import { validateBasic } from './auth/auth.js';
 import { swaggerConfig } from './config/swagger.js';
+import { JWT_STRATEGY } from './constants.js';
 import { default as routes } from './routes.js';
 
 config();
@@ -13,10 +17,14 @@ const main = async () => {
     debug: { request: ['error'] },
   });
 
-  server.route(routes);
-  await server.register(swaggerConfig);
-  await server.start();
+  await server.register(Basic);
+  await server.register(AuthJwt);
+  server.auth.strategy(JWT_STRATEGY, 'basic', { validate: validateBasic() });
 
+  await server.register(swaggerConfig);
+  server.route(routes);
+
+  await server.start();
   console.log('Server running on %s', server.info.uri);
 };
 

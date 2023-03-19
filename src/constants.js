@@ -1,5 +1,6 @@
 export const TABLES = {
   todos: 'todos',
+  users: 'users',
 }
 
 export const TODO_STATE = {
@@ -20,3 +21,7 @@ export const FILTER_PARAMS = {
 }
 
 export const TODO_FIELDS = ['id', 'description', 'state', 'createdAt', 'completedAt'];
+
+export const USER_FIELDS = ['id', 'username', 'hash', 'salt', 'createdAt'];
+
+export const JWT_STRATEGY = 'jwtStrategy';
