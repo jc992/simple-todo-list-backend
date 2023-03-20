@@ -11,7 +11,19 @@ const todoSchema = {
 const registerResponse = {
   username: Joi.string(),
   accessToken: Joi.string(),
-}
+};
+
+const loginResponse = {
+  credentials: {
+    username: Joi.string(),
+  },
+  accessToken: Joi.string(),
+};
+
+const getUserResponse = {
+  username: Joi.string(),
+  createdAt: Joi.date(),
+};
 
 export const TODO_VALIDATION_CONFIG = {
   GET: {
@@ -60,6 +72,11 @@ export const TODO_VALIDATION_CONFIG = {
 };
 
 export const USER_VALIDATION_CONFIG = {
+  LOGIN: {
+    response: {
+      schema: Joi.object(loginResponse).label('LoginResponse'),
+    },
+  },
   REGISTER: {
     validate: {
       payload: Joi.object({
@@ -69,6 +86,22 @@ export const USER_VALIDATION_CONFIG = {
     },
     response: {
       schema: Joi.object(registerResponse).label('RegisterResponse'),
+    },
+  },
+  GET: {
+    response: {
+      schema: Joi.object(getUserResponse).label('GetUserResponse'),
+    },
+  },
+  UPDATE: {
+    validate: {
+      payload: Joi.object({
+        username: Joi.string().optional(),
+        password: Joi.string().optional(),
+      }),
+    },
+    response: {
+      schema: Joi.boolean().label('UpdateUserResponse'),
     },
   },
 };
