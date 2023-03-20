@@ -1,5 +1,6 @@
 import { default as TodoController } from './controllers/todo.controller.js';
 import { default as AuthController } from './controllers/auth.controller.js';
+import { default as UserController } from './controllers/user.controller.js';
 import {
   TODO_VALIDATION_CONFIG,
   USER_VALIDATION_CONFIG,
@@ -76,6 +77,33 @@ export default [
       description: 'Login User',
       notes: 'This route logs a user in.',
       tags: ['api'],
+      ...USER_VALIDATION_CONFIG.LOGIN,
+    },
+  },
+
+  // USER
+  {
+    method: 'GET',
+    path: '/me',
+    handler: UserController.getUser,
+    options: {
+      auth: { strategy: JWT_STRATEGY },
+      description: 'Get User',
+      notes: 'This route returns a users details.',
+      tags: ['api'],
+      ...USER_VALIDATION_CONFIG.GET,
+    },
+  },
+  {
+    method: 'PATCH',
+    path: '/me',
+    handler: UserController.updateUser,
+    options: {
+      auth: { strategy: JWT_STRATEGY },
+      description: 'Update User',
+      notes: 'This route updates a users credentials.',
+      tags: ['api'],
+      ...USER_VALIDATION_CONFIG.UPDATE,
     },
   },
 ];

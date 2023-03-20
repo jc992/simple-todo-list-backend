@@ -13,14 +13,12 @@ export default {
    * createdAt: Creation date of the item (e.g., 2021-05-12T07:23:45.678Z).
    * completedAt: Completion date of the item (e.g., 2021-05-13T11:23:45.678Z).
    */
-  get: async (request) => {
-    const { query } = request;
-
+  get: async ({ query }) => {
     try {
       return todos.get(query);
     } catch (e) {
       console.error({ e });
-      throw BadRequestException(e.message);
+      return BadRequestException(e.message);
     }
   },
 
@@ -34,17 +32,16 @@ export default {
    * createdAt: Creation date of the item (e.g., 2021-05-12T07:23:45.678Z).
    * completedAt: Completion date of the item (e.g., 2021-05-13T11:23:45.678Z).
    */
-  post: async (request) => {
-    const { payload } = request;
+  post: async ({ payload }) => {
     if (!payload?.description) {
-      throw BadRequestException(ERROR_MESSAGES.NO_DESCRIPTION);
+      return BadRequestException(ERROR_MESSAGES.NO_DESCRIPTION);
     }
 
     try {
       return todos.insert(payload.description);
     } catch (e) {
       console.error({ e });
-      throw BadRequestException(e.message);
+      return BadRequestException(e.message);
     }
   },
 
@@ -61,40 +58,38 @@ export default {
    * createdAt: Creation date of the item (e.g., 2021-05-12T07:23:45.678Z).
    * completedAt: Completion date of the item (e.g., 2021-05-13T11:23:45.678Z).
    */
-  update: async (request, h) => {
-    const { query, payload } = request;
+  update: async ({ query, payload }) => {
     if (!query.id) {
-      throw BadRequestException(ERROR_MESSAGES.MISSING_ID);
+      return BadRequestException(ERROR_MESSAGES.MISSING_ID);
     }
 
     if (!payload.state && !payload.description) {
-      throw BadRequestException(ERROR_MESSAGES.INVALID_UPDATE_PAYLOAD);
+      return BadRequestException(ERROR_MESSAGES.INVALID_UPDATE_PAYLOAD);
     }
 
     try {
       return todos.update(query.id, payload);
     } catch (e) {
       console.error({ e });
-      throw BadRequestException(e.message);
+      return BadRequestException(e.message);
     }
   },
-  
+
   /**
    * This route removes an item from the to-do list. The item will be referenced by id using the URL parameter id
    * @param (URL) id {String} Mandatory query parameter Unique identifier of the list item.
    * @returns {Object} empty JSON object.
    */
-  delete: async (request) => {
-    const { query } = request;
+  delete: async ({ query }) => {
     if (!query.id) {
-      throw BadRequestException(ERROR_MESSAGES.MISSING_ID);
+      return BadRequestException(ERROR_MESSAGES.MISSING_ID);
     }
 
     try {
       return todos.delete(query.id);
     } catch (e) {
       console.error({ e });
-      throw BadRequestException(e.message);
+      return BadRequestException(e.message);
     }
   },
 };

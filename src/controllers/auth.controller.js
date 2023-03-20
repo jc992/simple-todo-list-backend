@@ -9,7 +9,6 @@ config();
 const { users } = TABLES;
 
 export default {
-  
   login: async ({ auth: { credentials } }) => {
     return {
       credentials,
